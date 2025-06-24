@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:kasir_klmpk6/pages/homePage.dart';
-import 'package:kasir_klmpk6/pages/orderPage.dart';
 
-
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
@@ -16,12 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage()
+      home: HomePage(),
     );
   }
 }
-
