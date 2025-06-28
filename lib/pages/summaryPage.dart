@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kasir_klmpk6/model/product.dart';
 import 'package:kasir_klmpk6/pages/homePage.dart';
+import 'package:kasir_klmpk6/pages/printbluetooth.dart'; // Pastikan import halaman Printbluetooth kamu!
 
 class SummaryPage extends StatelessWidget {
   final List<Map<String, dynamic>> orderItems;
@@ -39,11 +40,34 @@ class SummaryPage extends StatelessWidget {
                     title: Text("Metode Pembayaran"),
                     trailing: Text(paymentMethod),
                   ),
-                  ListTile(title: Text("Total"), trailing: Text("Rp $total")),
+                  ListTile(
+                    title: Text("Total"),
+                    trailing: Text("Rp $total"),
+                  ),
                 ],
               ),
             ),
             SizedBox(height: 16),
+            ElevatedButton.icon(
+              icon: Icon(Icons.print),
+              label: Text("Cetak Struk"),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => Printbluetooth(
+                      orderItems: orderItems,
+                      paymentMethod: paymentMethod,
+                      total: total,
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 10),
             ElevatedButton.icon(
               icon: Icon(Icons.home),
               label: Text("Kembali ke Beranda"),
