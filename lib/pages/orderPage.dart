@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kasir_klmpk6/model/product.dart';
 import 'package:kasir_klmpk6/pages/cartPage.dart';
 import 'package:kasir_klmpk6/services/product_services.dart';
@@ -105,7 +106,7 @@ class _OrderPageState extends State<OrderPage> {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        "Rp ${product.harga.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
+                        currencyFormat.format(product.harga),
                         style: TextStyle(
                           fontSize: 14,
                           color: Color(0xFF10B981),
@@ -216,7 +217,7 @@ class _OrderPageState extends State<OrderPage> {
                         ),
                       ),
                       Text(
-                        'Rp ${totalPrice.toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}',
+                        currencyFormat.format(totalPrice),
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.9),
                           fontSize: 12,
@@ -238,6 +239,9 @@ class _OrderPageState extends State<OrderPage> {
       ),
     );
   }
+
+  final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ');
+
 
   @override
   Widget build(BuildContext context) {

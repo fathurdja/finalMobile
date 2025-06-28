@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kasir_klmpk6/model/product.dart';
 import 'package:kasir_klmpk6/pages/paymentPage.dart';
 
@@ -107,7 +108,7 @@ class _CartPageState extends State<CartPage> {
                           ),
                           SizedBox(height: 4),
                           Text(
-                            "Rp ${formatRupiah(product.harga)}",
+                            currencyFormat.format(product.harga),
                             style: TextStyle(
                               fontSize: 14,
                               color: Color(0xFF6B7280),
@@ -193,7 +194,7 @@ class _CartPageState extends State<CartPage> {
                           ),
                         ),
                         Text(
-                          'Rp ${formatRupiah(subtotal)}',
+                          currencyFormat.format(subtotal),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -211,6 +212,8 @@ class _CartPageState extends State<CartPage> {
       ),
     );
   }
+  final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ');
+
 
   Widget buildTotalSection() {
     return Container(
@@ -281,7 +284,7 @@ class _CartPageState extends State<CartPage> {
                     ),
                   ),
                   Text(
-                    'Rp ${formatRupiah(total)}',
+                    currencyFormat.format(total),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kasir_klmpk6/model/product.dart';
 import 'package:kasir_klmpk6/model/transaction.dart';
 import 'package:kasir_klmpk6/pages/summaryPage.dart';
@@ -17,6 +18,8 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   String selectedPayment = "Cash";
   bool isLoading = false;
+  final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ');
+
 
   final List<Map<String, dynamic>> paymentMethods = [
     {
@@ -256,7 +259,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             ),
                           ),
                           Text(
-                            'Rp ${formatRupiah(subtotal)}',
+                            currencyFormat.format(subtotal),
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -309,7 +312,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                   ),
                   Text(
-                    'Rp ${formatRupiah(total)}',
+                    currencyFormat.format(total),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
