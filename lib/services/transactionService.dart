@@ -39,6 +39,7 @@ class TransactionService {
 
     final body = {
       "payment_method": tx.paymentMethod,
+      "id_transaksi": tx.idTransaksi,
       "total": tx.total,
       "timestamp": tx.timestamp.toIso8601String(),
       "items": items,
@@ -58,4 +59,37 @@ class TransactionService {
       );
     }
   }
+  Future<int> getLastTransactionNumber(String date) async {
+  final response = await http.get(Uri.parse(baseUrl));
+
+  if (response.statusCode == 200) {
+    final List<dynamic> data = jsonDecode(response.body);
+
+    // Ambil semua transaksi hari ini
+    final todayTransactions = data.where((tx) {
+      final idTransaksi = tx['idTransaksi'] ?? '';
+      return idTransaksi.startsWith("TRX-$date-");
+    }).toList();
+
+    if (todayTransactions.isEmpty) {
+      return 0; // Belum ada transaksi hari ini
+    }
+
+    // Urutkan descending, cari nomor terbesar
+    todayTransactions.sort((a, b) {
+      final aNum = int.parse(a['idTransaksi'].split('-').last);
+      final bNum = int.parse(b['idTransaksi'].split('-').last);
+      return bNum.compareTo(aNum);
+    });
+
+    final lastId = todayTransactions.first['idTransaksi'];
+    final lastNumber = int.parse(lastId.split('-').last);
+    return lastNumber;
+
+  } else {
+    throw Exception("Gagal mengambil data transaksi");
+  }
+}
+
+
 }

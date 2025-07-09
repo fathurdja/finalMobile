@@ -66,6 +66,7 @@ class _PaymentPageState extends State<PaymentPage> {
       paymentMethod: selectedPayment,
       total: total,
       timestamp: DateTime.now(),
+      idTransaksi: await generateTransactionId()
     );
 
     try {
@@ -494,4 +495,22 @@ class _PaymentPageState extends State<PaymentPage> {
       ),
     );
   }
+  Future<String> generateTransactionId() async {
+  // Format tanggal hari ini: yyyyMMdd
+  final today = DateFormat('yyyyMMdd').format(DateTime.now());
+
+  // Dapatkan nomor urut terakhir hari ini dari database
+  // Misal Anda punya TransactionService.getLastTransactionNumber(today)
+  int lastNumber = await TransactionService().getLastTransactionNumber(today);
+
+  // Jika belum ada transaksi hari ini, mulai dari 1
+  int newNumber = lastNumber + 1;
+
+  // Format nomor urut jadi 4 digit, misalnya 1 => 0001
+  String formattedNumber = newNumber.toString().padLeft(4, '0');
+
+  // Bentuk ID Transaksi lengkap
+  return "TRX-$today-$formattedNumber";
+}
+
 }
